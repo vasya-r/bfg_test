@@ -111,22 +111,22 @@ curl 'localhost:8080/stock/summary?top_n=1'
 Ошибки:
 ```bash
 curl -X POST localhost:8080/issues -H "$H" -d '{"sku": "A-100", "qty": 999, "warehouse": "WH-1"}'
-# 409 {"error": "not enough stock", "available": 30, "requested": 999}
+# 409 {"code": 409, "error": "not enough stock", "available": 30, "requested": 999}
 
 curl -X POST localhost:8080/receipts -H "$H" -d '{"sku": "A-100", "qty": -1, "warehouse": "WH-1"}'
-# 422 {"error": "validation error", "details": [{"type": "greater_than", "loc": ["qty"], "msg": "Input should be greater than 0"}]}
+# 422 {"code": 422, "error": "validation error", "details": [{"type": "greater_than", "loc": ["qty"], "msg": "Input should be greater than 0"}]}
 
 curl -X POST localhost:8080/receipts -H "$H" -d 'oops'
-# 400 {"error": "request body must be valid JSON"}
+# 400 {"code": 400, "error": "request body must be valid JSON"}
 
 curl 'localhost:8080/stock'
-# 422 {"error": "validation error", "details": [{"type": "missing", "loc": ["warehouse"], "msg": "Field required"}]}
+# 422 {"code": 422, "error": "validation error", "details": [{"type": "missing", "loc": ["warehouse"], "msg": "Field required"}]}
 
 curl 'localhost:8080/unknown'
-# 404 {"error": "not found"}
+# 404 {"code": 404, "error": "not found"}
 
 curl -X DELETE 'localhost:8080/stock'
-# 405 {"error": "method not allowed"}
+# 405 {"code": 405, "error": "method not allowed"}
 ```
 
 Все ошибки, включая необработанные, возвращаются в JSON

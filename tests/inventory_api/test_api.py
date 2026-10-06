@@ -85,6 +85,7 @@ async def test_issue_over_available_stock_is_rejected(client, engine):
 
     assert response.status == 409
     assert await response.json() == {
+        "code": 409,
         "error": "not enough stock",
         "available": 50,
         "requested": 51,
